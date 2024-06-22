@@ -489,16 +489,15 @@ app.image('/check/:fid', async (c) => {
 
   const currentDate = new Date();
 
-  const datePart = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric', month: 'short', day: '2-digit'
-  }).format(currentDate);
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const timePart = new Intl.DateTimeFormat('en-US', {
+  const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric', month: 'short', day: '2-digit',
       hour: '2-digit', minute: '2-digit', hour12: true,
-      timeZoneName: 'short'
-  }).format(currentDate);
-
-  const formattedDate = `${datePart} ${timePart}`;
+      timeZoneName: 'short',
+      timeZone: timezone
+  };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
   const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
