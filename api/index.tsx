@@ -105,7 +105,7 @@ app.image('/tips', async (c) => {
               <Divider direction="vertical" color="yellow" />
               <Divider direction="vertical" color="yellow" />
               <Spacer size="10" />
-              <Text color="white" align="center" size="32">
+              <Text color="white" weight="600" align="center" size="32">
                 Farther Tips
               </Text>
             </Column>
@@ -361,7 +361,6 @@ app.image('/tips', async (c) => {
     ),
   })
 })
-
 
 
 // Uncomment for local server testing
