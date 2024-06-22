@@ -487,16 +487,23 @@ app.image('/check/:fid', async (c) => {
 
   const { tipMinimum, _count: { allowances } } = meta.result.data[0];
 
+  const ipapiResponse = await fetch('https://ipapi.co/json/');
+
+  if (!ipapiResponse.ok) {
+    throw new Error('Failed to fetch user timezone');
+  }
+  
+  const ipapiData = await ipapiResponse.json();
+  const userTimezone = ipapiData.timezone;
+
   const currentDate = new Date();
-
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
   const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric', month: 'short', day: '2-digit',
-      hour: '2-digit', minute: '2-digit', hour12: true,
-      timeZoneName: 'short',
-      timeZone: timezone
+    year: 'numeric', month: 'short', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: true,
+    timeZoneName: 'short',
+    timeZone: userTimezone
   };
+
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
   const { displayName, pfpUrl, tips } = userData.result.data;
