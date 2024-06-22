@@ -668,7 +668,7 @@ app.image('/check/:fid', async (c) => {
           width="100%"
         >
           <Text color="lightGrey" weight="400" align="left" size="14">
-            {currentCycleDate}
+            {currentCycleDate} CYCLE
           </Text>
         </Box>
 
