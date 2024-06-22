@@ -195,7 +195,7 @@ app.image('/tips', async (c) => {
                 />
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
-                  0x94t3z 📟 ✦⁺ 
+                  0x94t3
                 </Text>
               </Box>
             </Column>
@@ -498,6 +498,11 @@ app.image('/check/:fid', async (c) => {
   // Extract displayName and pfpUrl
   const { displayName, pfpUrl } = userData.result.data;
 
+  // Truncate the displayName if it is too long
+  const truncatedDisplayName = displayName.length > 15 
+  ? `${displayName.substring(0, 15)}...` 
+  : displayName;
+
   // Extract tips and currentCycle data
   const { totals, currentCycle } = userData.result.data.tips;
 
@@ -591,7 +596,7 @@ app.image('/check/:fid', async (c) => {
                 />
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
-                  {displayName}
+                  {truncatedDisplayName}
                 </Text>
               </Box>
             </Column>
