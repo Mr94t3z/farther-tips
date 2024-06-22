@@ -189,7 +189,7 @@ app.image('/tips', async (c) => {
                 <Image
                   height="28"
                   width="28"
-                  objectFit="cover"
+                  objectFit="contain"
                   borderRadius="48"
                   src='https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d523769a-c865-4907-3602-d8f391fed600/rectcrop3'
                 />
@@ -585,7 +585,7 @@ app.image('/check/:fid', async (c) => {
                 <Image
                   height="28"
                   width="28"
-                  objectFit="cover"
+                  objectFit="contain"
                   borderRadius="48"
                   src={pfpUrl}
                 />
