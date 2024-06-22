@@ -57,7 +57,7 @@ app.castAction(
 
     return c.frame({ path: '/farther-tips-action'})
   }, 
-  { name: "Farther Tips Allowance ✨", icon: "moon", description: "A Farcaster Cast Action to check Farther Tip Allowance."}
+  { name: "Farther Tips Allowance ✨", icon: "moon", description: "A Farcaster Cast Action to check Farther Tip Allowance.", aboutUrl: 'https://farther.social/tips'}
 )
 
 
