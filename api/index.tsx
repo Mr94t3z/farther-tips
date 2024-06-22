@@ -69,23 +69,25 @@ app.castAction(
 
 app.frame('/farther-tips-action/:fid', async (c) => {
   const { fid } = c.req.param();
-
   const params = { fid: fid };
   const encodedParams = encodeURIComponent(JSON.stringify(params));
   const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
-  const responseUser = await fetch(apiUrl);
 
-  // Check if the response is OK (status code 200-299)
+  // Fetch the user data in parallel with other potential API calls
+  const [responseUser] = await Promise.all([
+    fetch(apiUrl),
+  ]);
+
   if (!responseUser.ok) {
     const errorData = await responseUser.json();
     if (errorData.error && errorData.error.code === -32004) {
-      return c.error( {
+      return c.error({
         message: `User not found in database!`,
-      })
+      });
     } else {
-      return c.error( {
+      return c.error({
         message: `HTTP error! Status: ${responseUser.status}`,
-      })
+      });
     }
   }
 
@@ -94,32 +96,33 @@ app.frame('/farther-tips-action/:fid', async (c) => {
     image: `/check/${fid}`,
     intents: [
       <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
-      <Button  action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>
+      <Button action='/check-by-me'> Check mine </Button>,
+      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
     ],
-  })
-})
-
+  });
+});
 
 app.frame('/check-by-me/', async (c) => {
-  const { fid } = c.var.interactor || {}
-
+  const { fid } = c.var.interactor || {};
   const params = { fid: fid };
   const encodedParams = encodeURIComponent(JSON.stringify(params));
   const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
-  const responseUser = await fetch(apiUrl);
 
-  // Check if the response is OK (status code 200-299)
+  // Fetch the user data in parallel with other potential API calls
+  const [responseUser] = await Promise.all([
+    fetch(apiUrl),
+  ]);
+
   if (!responseUser.ok) {
     const errorData = await responseUser.json();
     if (errorData.error && errorData.error.code === -32004) {
-      return c.error( {
+      return c.error({
         message: `User not found in database!`,
-      })
+      });
     } else {
-      return c.error( {
+      return c.error({
         message: `HTTP error! Status: ${responseUser.status}`,
-      })
+      });
     }
   }
 
@@ -129,10 +132,10 @@ app.frame('/check-by-me/', async (c) => {
     intents: [
       <Button action='/check-by-me'> Refresh </Button>,
       <Button action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>
+      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
     ],
-  })
-})
+  });
+});
 
 
 app.image('/tips', async (c) => {
@@ -195,7 +198,7 @@ app.image('/tips', async (c) => {
                 />
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
-                  0x94t3
+                  0x94t3z 📟 ✦⁺
                 </Text>
               </Box>
             </Column>
@@ -454,59 +457,38 @@ app.image('/tips', async (c) => {
 
 
 app.image('/check/:fid', async (c) => {
-  // Extract fid from the request
   const { fid } = c.req.param();
 
-  // Make the API request to fetch public tips meta
-  const responseMeta = await fetch('https://farther.social/api/v1/public.tips.meta');
+  // Make the API requests in parallel
+  const [responseMeta, responseUser] = await Promise.all([
+    fetch('https://farther.social/api/v1/public.tips.meta'),
+    fetch(`https://farther.social/api/v1/public.user.byFid?input=${encodeURIComponent(JSON.stringify({ fid }))}`)
+  ]);
 
-  // Check if the response is OK (status code 200-299)
-  if (!responseMeta.ok) {
-    throw new Error(`HTTP error! Status: ${responseMeta.status}`);
+  // Check if the responses are OK (status code 200-299)
+  if (!responseMeta.ok || !responseUser.ok) {
+    throw new Error(`HTTP error! Status: ${responseMeta.status}, ${responseUser.status}`);
   }
 
-  // Parse the JSON response
-  const meta = await responseMeta.json();
+  // Parse the JSON responses
+  const [meta, userData] = await Promise.all([
+    responseMeta.json(),
+    responseUser.json()
+  ]);
 
-   // Extract the specific fields from the data
-   const { tipMinimum, updatedAt, _count: { allowances } } = meta.result.data[0];
-
-  // Format updatedAt date
+  const { tipMinimum, updatedAt, _count: { allowances } } = meta.result.data[0];
   const updatedDate = new Date(updatedAt);
-
-  // Format the date
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric', month: 'short', day: '2-digit',
     hour: '2-digit', minute: '2-digit', hour12: true
   };
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(updatedDate);
 
-  // Make the API request to fetch user by fid
-  const params = { fid: fid };
-  const encodedParams = encodeURIComponent(JSON.stringify(params));
-  const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
-  const responseUser = await fetch(apiUrl);
+  const { displayName, pfpUrl, tips } = userData.result.data;
+  const truncatedDisplayName = displayName.length > 15 ? `${displayName.substring(0, 15)}...` : displayName;
 
-  // Check if the response is OK (status code 200-299)
-  if (!responseUser.ok) {
-    throw new Error(`HTTP error! Status: ${responseUser.status}`);
-  }
+  const { totals, currentCycle } = tips;
 
-  // Parse the JSON response
-  const userData = await responseUser.json();
-
-  // Extract displayName and pfpUrl
-  const { displayName, pfpUrl } = userData.result.data;
-
-  // Truncate the displayName if it is too long
-  const truncatedDisplayName = displayName.length > 15 
-  ? `${displayName.substring(0, 15)}...` 
-  : displayName;
-
-  // Extract tips and currentCycle data
-  const { totals, currentCycle } = userData.result.data.tips;
-
-  // Prepare cycle date information
   let currentCycleDate = null;
   if (currentCycle && currentCycle.startTime) {
     const startTime = new Date(currentCycle.startTime);
@@ -515,7 +497,6 @@ app.image('/check/:fid', async (c) => {
     currentCycleDate = `${month} ${day}`;
   }
 
-  // Prepare null cycle date information from updatedAt if currentCycle is null
   let nullCycleDate = formattedDate;
   if (!currentCycle || !currentCycle.startTime) {
     const nullStartDate = new Date(updatedDate);
@@ -524,7 +505,6 @@ app.image('/check/:fid', async (c) => {
     nullCycleDate = `${nullMonth} ${nullDay}`;
   }
 
-  // Extract totals and currentCycle values
   const total_given = totals.givenCount || 0;
   const amount_given = totals.givenAmount || 0;
   const total_received = totals.receivedCount || 0;
