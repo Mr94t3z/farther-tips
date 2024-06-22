@@ -493,8 +493,8 @@ app.image('/check/:fid', async (c) => {
   };
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(updatedDate);
 
-  const { displayName, pfpUrl, tips } = userData.result.data;
-  const truncatedDisplayName = displayName.length > 15 ? `${displayName.substring(0, 15)}...` : displayName;
+  const { tips } = userData.result.data;
+  // const truncatedDisplayName = displayName.length > 15 ? `${displayName.substring(0, 15)}...` : displayName;
 
   const { totals, currentCycle } = tips;
 
