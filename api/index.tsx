@@ -14,8 +14,8 @@ import {
 
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
 
 // Initialize Frog App
 export const app = new Frog({
@@ -103,6 +103,26 @@ app.frame('/farther-tips-action/:fid', async (c) => {
 
 app.frame('/check-by-me/', async (c) => {
   const { fid } = c.var.interactor || {}
+
+  const params = { fid: fid };
+  const encodedParams = encodeURIComponent(JSON.stringify(params));
+  const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
+  const responseUser = await fetch(apiUrl);
+
+  // Check if the response is OK (status code 200-299)
+  if (!responseUser.ok) {
+    const errorData = await responseUser.json();
+    if (errorData.error && errorData.error.code === -32004) {
+      return c.error( {
+        message: `User not found in database!`,
+      })
+    } else {
+      return c.error( {
+        message: `HTTP error! Status: ${responseUser.status}`,
+      })
+    }
+  }
+
   return c.res({
     title: 'Farther Tips Allowance ✨',
     image: `/check/${fid}`,
@@ -169,6 +189,7 @@ app.image('/tips', async (c) => {
                 <Image
                   height="28"
                   width="28"
+                  objectFit="cover"
                   borderRadius="48"
                   src='https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d523769a-c865-4907-3602-d8f391fed600/rectcrop3'
                 />
@@ -564,6 +585,7 @@ app.image('/check/:fid', async (c) => {
                 <Image
                   height="28"
                   width="28"
+                  objectFit="cover"
                   borderRadius="48"
                   src={pfpUrl}
                 />
@@ -888,7 +910,7 @@ app.image('/check/:fid', async (c) => {
 
 
 // Uncomment for local server testing
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
