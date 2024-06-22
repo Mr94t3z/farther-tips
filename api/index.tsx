@@ -495,7 +495,21 @@ app.image('/check/:fid', async (c) => {
 
   const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
-  const isGif = pfpUrl.endsWith('.gif');
+  
+  // Array of unsupported image URLs
+  const unsupportedImageUrls = [
+    'https://supercast.mypinata.cloud/ipfs/QmUaMVEfNYXhpbzj5cyw1BTRtGivYuTTwAWK5RpREEhyex?filename=glitch-art-studio.gif',
+    // Add more URLs if needed
+  ];
+
+  // Fallback image URL
+  const fallbackImageUrl = 'https://warpcast.com/avatar.png';
+
+  // Check if the pfpUrl is in the unsupported image URLs array
+  const isUnsupportedImage = unsupportedImageUrls.includes(pfpUrl);
+
+  // Determine the image URL to use
+  const imageUrl = isUnsupportedImage ? fallbackImageUrl : pfpUrl;
 
   const { totals, currentCycle } = tips;
 
@@ -582,7 +596,7 @@ app.image('/check/:fid', async (c) => {
                   width="28"
                   objectFit="cover"
                   borderRadius="48"
-                  src={isGif ? 'https://warpcast.com/avatar.png' : pfpUrl}
+                  src={imageUrl}
                 />
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
