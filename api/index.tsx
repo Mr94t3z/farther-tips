@@ -134,8 +134,8 @@ app.frame('/check-mine', async (c) => {
       title: 'Farther Tips Allowance ✨',
       image: `/check/${fid}`,
       intents: [
-        <Button action='/check-by-me'> Refresh </Button>,
-        <Button action='/check-by-me'> Check mine </Button>,
+        <Button action='/check-mine'> Refresh </Button>,
+        <Button action='/check-mine'> Check mine </Button>,
         <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
       ],
     });
