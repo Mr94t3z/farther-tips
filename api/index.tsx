@@ -490,8 +490,13 @@ app.image('/check/:fid', async (c) => {
   const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
   
-  const userTimezoneOffset = new Date().getTimezoneOffset() * 60000;
-  const localTime = new Date(Date.now() - userTimezoneOffset).toISOString().slice(0, 19).replace("T", " ");
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric', month: 'short', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: true,
+    timeZoneName: 'short'
+  };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
   // Array of unsupported image URLs
   const unsupportedImageUrls = [
@@ -609,7 +614,7 @@ app.image('/check/:fid', async (c) => {
           <Spacer size="12" />
 
           <Text color="white" weight="400" align="left" size="20">
-             {localTime}
+             {formattedDate}
           </Text>
 
           <Spacer size="14" />
