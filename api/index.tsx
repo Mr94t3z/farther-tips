@@ -102,7 +102,8 @@ app.frame('/farther-tips-action/:fid', async (c) => {
   });
 });
 
-app.frame('/check-by-me/', async (c) => {
+
+app.frame('/check-by-me', async (c) => {
   const { fid } = c.var.interactor || {};
   const params = { fid: fid };
   const encodedParams = encodeURIComponent(JSON.stringify(params));
