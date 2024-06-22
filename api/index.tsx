@@ -5,6 +5,7 @@ import {
   Box, 
   Column, 
   Divider,
+  Image,
   Icon,
   Text, 
   Spacer, 
@@ -115,19 +116,47 @@ app.image('/tips', async (c) => {
           width="100%"
         >
           <Box grow flexDirection="row" gap="8">
-            <Column 
-              width="2/4" 
-              padding="12" 
-              paddingLeft="0" 
-              flexDirection="row" 
-              alignHorizontal="left"
-            >
+            <Column width="2/4" padding="12" paddingLeft="0" flexDirection="row" alignHorizontal="left">
               <Divider direction="vertical" color="yellow" />
               <Divider direction="vertical" color="yellow" />
               <Spacer size="10" />
-              <Text color="white" weight="600" align="center" size="32">
+              <Text color="white" weight="400" align="center" size="32">
                 Farther Tips
               </Text>
+            </Column>
+            <Column 
+              width="2/4" 
+              padding="8" 
+              paddingLeft="0" 
+              paddingRight="0"
+              flexDirection="row" 
+              alignHorizontal="right"
+            >
+              <Box 
+                borderStyle="solid"
+                borderWidth="1"
+                borderColor="yellow"
+                backgroundColor="lightGrey"
+                flexDirection="row" 
+                borderRadius="8"
+                padding="8"
+                paddingLeft="20"
+                paddingRight="20"
+                height="48"
+                alignVertical="center"
+                maxWidth="100%"
+              >
+                <Image
+                  height="28"
+                  width="28"
+                  borderRadius="48"
+                  src='https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d523769a-c865-4907-3602-d8f391fed600/rectcrop3'
+                />
+                <Spacer size="10" />
+                <Text color="yellow" weight="600" align="center" size="16">
+                  0x94t3z 📟 ✦⁺ 
+                </Text>
+              </Box>
             </Column>
           </Box>
         </Box>
@@ -210,7 +239,7 @@ app.image('/tips', async (c) => {
           borderStyle="solid"
           borderWidth="1"
           borderRadius="8"
-          padding="18"
+          padding="14"
           paddingLeft="24"
           borderColor="lightGrey"
           height="128"
@@ -317,7 +346,7 @@ app.image('/tips', async (c) => {
           borderStyle="solid"
           borderWidth="1"
           borderRadius="8"
-          padding="20"
+          padding="16"
           paddingLeft="24"
           borderColor="lightGrey"
           height="60"
@@ -425,6 +454,9 @@ app.image('/check/:fid', async (c) => {
   // Parse the JSON response
   const userData = await responseUser.json();
 
+  // Extract displayName and pfpUrl
+  const { displayName, pfpUrl } = userData.result.data;
+
   // Extract tips and currentCycle data
   const { totals, currentCycle } = userData.result.data.tips;
 
@@ -447,6 +479,7 @@ app.image('/check/:fid', async (c) => {
   }
 
   // Extract totals and currentCycle values
+  
   const total_given = totals.givenCount || 0;
   const amount_given = totals.givenAmount || 0;
   const total_received = totals.receivedCount || 0;
@@ -479,19 +512,47 @@ app.image('/check/:fid', async (c) => {
           width="100%"
         >
           <Box grow flexDirection="row" gap="8">
-            <Column 
-              width="2/4" 
-              padding="12" 
-              paddingLeft="0" 
-              flexDirection="row" 
-              alignHorizontal="left"
-            >
+            <Column width="2/4" padding="12" paddingLeft="0" flexDirection="row" alignHorizontal="left">
               <Divider direction="vertical" color="yellow" />
               <Divider direction="vertical" color="yellow" />
               <Spacer size="10" />
-              <Text color="white" weight="600" align="center" size="32">
+              <Text color="white" weight="400" align="center" size="32">
                 Farther Tips
               </Text>
+            </Column>
+            <Column 
+              width="2/4" 
+              padding="8" 
+              paddingLeft="0" 
+              paddingRight="0"
+              flexDirection="row" 
+              alignHorizontal="right"
+            >
+              <Box 
+                borderStyle="solid"
+                borderWidth="1"
+                borderColor="yellow"
+                backgroundColor="lightGrey"
+                flexDirection="row" 
+                borderRadius="8"
+                padding="8"
+                paddingLeft="20"
+                paddingRight="20"
+                height="48"
+                alignVertical="center"
+                maxWidth="100%"
+              >
+                <Image
+                  height="28"
+                  width="28"
+                  borderRadius="48"
+                  src={pfpUrl}
+                />
+                <Spacer size="10" />
+                <Text color="yellow" weight="600" align="center" size="16">
+                  {displayName}
+                </Text>
+              </Box>
             </Column>
           </Box>
         </Box>
