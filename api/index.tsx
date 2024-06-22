@@ -69,26 +69,26 @@ app.castAction(
 
 app.frame('/farther-tips-action/:fid', async (c) => {
   const { fid } = c.req.param();
-  // const params = { fid: fid };
-  // const encodedParams = encodeURIComponent(JSON.stringify(params));
-  // const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
+  const params = { fid: fid };
+  const encodedParams = encodeURIComponent(JSON.stringify(params));
+  const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
 
   // Fetch the user data in parallel with other potential API calls
   try {
-    // const [responseUser] = await Promise.all([fetch(apiUrl)]);
+    const [responseUser] = await Promise.all([fetch(apiUrl)]);
 
-    // if (!responseUser.ok) {
-    //   const errorData = await responseUser.json();
-    //   if (errorData.error && errorData.error.code === -32004) {
-    //     return c.error({
-    //       message: `User not found in database!`,
-    //     });
-    //   } else {
-    //     return c.error({
-    //       message: `HTTP error! Status: ${responseUser.status}`,
-    //     });
-    //   }
-    // }
+    if (!responseUser.ok) {
+      const errorData = await responseUser.json();
+      if (errorData.error && errorData.error.code === -32004) {
+        return c.error({
+          message: `User not found in database!`,
+        });
+      } else {
+        return c.error({
+          message: `HTTP error! Status: ${responseUser.status}`,
+        });
+      }
+    }
 
     return c.res({
       title: 'Farther Tips Allowance ✨',
@@ -109,26 +109,26 @@ app.frame('/farther-tips-action/:fid', async (c) => {
 
 app.frame('/check-mine', async (c) => {
   const { fid } = c.var.interactor || {};
-  // const params = { fid: fid };
-  // const encodedParams = encodeURIComponent(JSON.stringify(params));
-  // const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
+  const params = { fid: fid };
+  const encodedParams = encodeURIComponent(JSON.stringify(params));
+  const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
 
   // Fetch the user data in parallel with other potential API calls
   try {
-    // const [responseUser] = await Promise.all([fetch(apiUrl)]);
+    const [responseUser] = await Promise.all([fetch(apiUrl)]);
 
-    // if (!responseUser.ok) {
-    //   const errorData = await responseUser.json();
-    //   if (errorData.error && errorData.error.code === -32004) {
-    //     return c.error({
-    //       message: `User not found in database!`,
-    //     });
-    //   } else {
-    //     return c.error({
-    //       message: `HTTP error! Status: ${responseUser.status}`,
-    //     });
-    //   }
-    // }
+    if (!responseUser.ok) {
+      const errorData = await responseUser.json();
+      if (errorData.error && errorData.error.code === -32004) {
+        return c.error({
+          message: `User not found in database!`,
+        });
+      } else {
+        return c.error({
+          message: `HTTP error! Status: ${responseUser.status}`,
+        });
+      }
+    }
 
     return c.res({
       title: 'Farther Tips Allowance ✨',
@@ -493,8 +493,9 @@ app.image('/check/:fid', async (c) => {
   };
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(updatedDate);
 
-  const { displayName, tips } = userData.result.data;
+  const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
+  const isGif = pfpUrl.endsWith('.gif');
 
   const { totals, currentCycle } = tips;
 
@@ -576,13 +577,13 @@ app.image('/check/:fid', async (c) => {
                 alignVertical="center"
                 maxWidth="100%"
               >
-                {/* <Image
+                <Image
                   height="28"
                   width="28"
                   objectFit="cover"
                   borderRadius="48"
-                  src={pfpUrl}
-                /> */}
+                  src={isGif ? 'https://warpcast.com/avatar.png' : pfpUrl}
+                />
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
                   {truncatedDisplayName}
