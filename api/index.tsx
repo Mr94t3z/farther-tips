@@ -485,17 +485,19 @@ app.image('/check/:fid', async (c) => {
     responseUser.json()
   ]);
 
-  const { tipMinimum, updatedAt, _count: { allowances } } = meta.result.data[0];
-  const updatedDate = new Date(updatedAt);
+  const { tipMinimum, _count: { allowances } } = meta.result.data[0];
+
+  const currentDate = new Date();
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric', month: 'short', day: '2-digit',
-    hour: '2-digit', minute: '2-digit', hour12: true
+    hour: '2-digit', minute: '2-digit', hour12: true,
+    timeZoneName: 'short'
   };
-  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(updatedDate);
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
   const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
-  
+
   // Array of unsupported image URLs
   const unsupportedImageUrls = [
     'https://supercast.mypinata.cloud/ipfs/QmUaMVEfNYXhpbzj5cyw1BTRtGivYuTTwAWK5RpREEhyex?filename=glitch-art-studio.gif',
@@ -513,22 +515,11 @@ app.image('/check/:fid', async (c) => {
 
   const { totals, currentCycle } = tips;
 
-  let currentCycleDate = null;
-  if (currentCycle && currentCycle.startTime) {
-    const startTime = new Date(currentCycle.startTime);
-    const month = startTime.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-    const day = startTime.getDate();
-    currentCycleDate = `${month} ${day}`;
-  }
-
-  let nullCycleDate = formattedDate;
-  if (!currentCycle || !currentCycle.startTime) {
-    const nullStartDate = new Date(updatedDate);
-    const nullMonth = nullStartDate.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-    const nullDay = nullStartDate.getDate();
-    nullCycleDate = `${nullMonth} ${nullDay}`;
-  }
-
+  const startTime = new Date();
+  const month = startTime.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  const day = startTime.getDate();
+  const currentCycleDate = `${month} ${day}`;
+  
   const total_given = totals.givenCount || 0;
   const amount_given = totals.givenAmount || 0;
   const total_received = totals.receivedCount || 0;
@@ -677,7 +668,7 @@ app.image('/check/:fid', async (c) => {
           width="100%"
         >
           <Text color="lightGrey" weight="400" align="left" size="14">
-            {currentCycleDate ? `${currentCycleDate} CYCLE` : `${nullCycleDate} CYCLE`}
+            {currentCycleDate}
           </Text>
         </Box>
 
