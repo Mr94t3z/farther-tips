@@ -321,7 +321,7 @@ app.image('/tips', async (c) => {
                   </Text>
                   <Spacer size="6" />
                   <Text color="lightGrey" weight="400" align="right" size="16">
-                    (tips)
+                    (0 tips)
                   </Text>
                 </Box>
 
