@@ -493,7 +493,7 @@ app.image('/check/:fid', async (c) => {
   };
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(updatedDate);
 
-  const { displayName, pfpUrl, tips } = userData.result.data;
+  const { displayName, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
 
   const { totals, currentCycle } = tips;
@@ -576,13 +576,13 @@ app.image('/check/:fid', async (c) => {
                 alignVertical="center"
                 maxWidth="100%"
               >
-                <Image
+                {/* <Image
                   height="28"
                   width="28"
                   objectFit="cover"
                   borderRadius="48"
                   src={pfpUrl}
-                />
+                /> */}
                 <Spacer size="10" />
                 <Text color="yellow" weight="600" align="center" size="16">
                   {truncatedDisplayName}
