@@ -96,7 +96,7 @@ app.frame('/farther-tips-action/:fid', async (c) => {
       intents: [
         <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
         <Button action='/check-mine'> Check mine </Button>,
-        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
+        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x80c10619'> ✨ Tip </Button.Link>,
       ],
     });
   } catch (error) {
@@ -136,7 +136,7 @@ app.frame('/check-mine', async (c) => {
       intents: [
         <Button action='/check-mine'> Refresh </Button>,
         <Button action='/check-mine'> Check mine </Button>,
-        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
+        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x80c10619'> ✨ Tip </Button.Link>,
       ],
     });
   } catch (error) {
@@ -554,7 +554,7 @@ app.image('/check/:fid', async (c) => {
                 Farther Tips
               </Text>
             </Column>
-            <Column 
+            {/* <Column 
               width="2/4" 
               padding="8" 
               paddingLeft="0" 
@@ -588,7 +588,7 @@ app.image('/check/:fid', async (c) => {
                   {truncatedDisplayName}
                 </Text>
               </Box>
-            </Column>
+            </Column> */}
           </Box>
         </Box>
 
