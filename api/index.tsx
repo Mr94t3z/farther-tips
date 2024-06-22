@@ -14,8 +14,8 @@ import {
 
 
 // Uncomment this packages to tested on local server
-// import { devtools } from 'frog/dev';
-// import { serveStatic } from 'frog/serve-static';
+import { devtools } from 'frog/dev';
+import { serveStatic } from 'frog/serve-static';
 
 // Initialize Frog App
 export const app = new Frog({
@@ -69,6 +69,26 @@ app.castAction(
 
 app.frame('/farther-tips-action/:fid', async (c) => {
   const { fid } = c.req.param();
+
+  const params = { fid: fid };
+  const encodedParams = encodeURIComponent(JSON.stringify(params));
+  const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
+  const responseUser = await fetch(apiUrl);
+
+  // Check if the response is OK (status code 200-299)
+  if (!responseUser.ok) {
+    const errorData = await responseUser.json();
+    if (errorData.error && errorData.error.code === -32004) {
+      return c.error( {
+        message: `User not found in database!`,
+      })
+    } else {
+      return c.error( {
+        message: `HTTP error! Status: ${responseUser.status}`,
+      })
+    }
+  }
+
   return c.res({
     title: 'Farther Tips Allowance ✨',
     image: `/check/${fid}`,
@@ -479,7 +499,6 @@ app.image('/check/:fid', async (c) => {
   }
 
   // Extract totals and currentCycle values
-  
   const total_given = totals.givenCount || 0;
   const amount_given = totals.givenAmount || 0;
   const total_received = totals.receivedCount || 0;
@@ -869,7 +888,7 @@ app.image('/check/:fid', async (c) => {
 
 
 // Uncomment for local server testing
-// devtools(app, { serveStatic });
+devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
