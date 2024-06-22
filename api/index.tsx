@@ -12,8 +12,8 @@ import {
 
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
 
 // Initialize Frog App
 export const app = new Frog({
@@ -28,7 +28,7 @@ export const app = new Frog({
     height: 1024,
     width: 1024,
   },
-  // browserLocation: CAST_INTENS,
+  browserLocation: 'https://warpcast.com/~/add-cast-action?url=https://farther-tips.vercel.app/api/frame/farther-tips',
 })
 
 
@@ -365,7 +365,7 @@ app.image('/tips', async (c) => {
 
 
 // Uncomment for local server testing
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
