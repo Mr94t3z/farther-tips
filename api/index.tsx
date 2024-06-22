@@ -74,68 +74,76 @@ app.frame('/farther-tips-action/:fid', async (c) => {
   const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
 
   // Fetch the user data in parallel with other potential API calls
-  const [responseUser] = await Promise.all([
-    fetch(apiUrl),
-  ]);
+  try {
+    const [responseUser] = await Promise.all([fetch(apiUrl)]);
 
-  if (!responseUser.ok) {
-    const errorData = await responseUser.json();
-    if (errorData.error && errorData.error.code === -32004) {
-      return c.error({
-        message: `User not found in database!`,
-      });
-    } else {
-      return c.error({
-        message: `HTTP error! Status: ${responseUser.status}`,
-      });
+    if (!responseUser.ok) {
+      const errorData = await responseUser.json();
+      if (errorData.error && errorData.error.code === -32004) {
+        return c.error({
+          message: `User not found in database!`,
+        });
+      } else {
+        return c.error({
+          message: `HTTP error! Status: ${responseUser.status}`,
+        });
+      }
     }
-  }
 
-  return c.res({
-    title: 'Farther Tips Allowance ✨',
-    image: `/check/${fid}`,
-    intents: [
-      <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
-      <Button action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
-    ],
-  });
+    return c.res({
+      title: 'Farther Tips Allowance ✨',
+      image: `/check/${fid}`,
+      intents: [
+        <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
+        <Button action='/check-mine'> Check mine </Button>,
+        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
+      ],
+    });
+  } catch (error) {
+    return c.error({
+      message: `An error occurred: ${error}`,
+    });
+  }
 });
 
 
-app.frame('/check-by-me', async (c) => {
+app.frame('/check-mine', async (c) => {
   const { fid } = c.var.interactor || {};
   const params = { fid: fid };
   const encodedParams = encodeURIComponent(JSON.stringify(params));
   const apiUrl = `https://farther.social/api/v1/public.user.byFid?input=${encodedParams}`;
 
   // Fetch the user data in parallel with other potential API calls
-  const [responseUser] = await Promise.all([
-    fetch(apiUrl),
-  ]);
+  try {
+    const [responseUser] = await Promise.all([fetch(apiUrl)]);
 
-  if (!responseUser.ok) {
-    const errorData = await responseUser.json();
-    if (errorData.error && errorData.error.code === -32004) {
-      return c.error({
-        message: `User not found in database!`,
-      });
-    } else {
-      return c.error({
-        message: `HTTP error! Status: ${responseUser.status}`,
-      });
+    if (!responseUser.ok) {
+      const errorData = await responseUser.json();
+      if (errorData.error && errorData.error.code === -32004) {
+        return c.error({
+          message: `User not found in database!`,
+        });
+      } else {
+        return c.error({
+          message: `HTTP error! Status: ${responseUser.status}`,
+        });
+      }
     }
-  }
 
-  return c.res({
-    title: 'Farther Tips Allowance ✨',
-    image: `/check/${fid}`,
-    intents: [
-      <Button action='/check-by-me'> Refresh </Button>,
-      <Button action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
-    ],
-  });
+    return c.res({
+      title: 'Farther Tips Allowance ✨',
+      image: `/check/${fid}`,
+      intents: [
+        <Button action='/check-by-me'> Refresh </Button>,
+        <Button action='/check-by-me'> Check mine </Button>,
+        <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>,
+      ],
+    });
+  } catch (error) {
+    return c.error({
+      message: `An error occurred: ${error}`,
+    });
+  }
 });
 
 
