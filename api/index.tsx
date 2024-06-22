@@ -489,6 +489,9 @@ app.image('/check/:fid', async (c) => {
 
   const { displayName, pfpUrl, tips } = userData.result.data;
   const truncatedDisplayName = displayName.length > 15 ? displayName.substring(0, 15) + '...' : displayName;
+  
+  const userTimezoneOffset = new Date().getTimezoneOffset() * 60000;
+  const localTime = new Date(Date.now() - userTimezoneOffset).toISOString().slice(0, 19).replace("T", " ");
 
   // Array of unsupported image URLs
   const unsupportedImageUrls = [
@@ -606,7 +609,7 @@ app.image('/check/:fid', async (c) => {
           <Spacer size="12" />
 
           <Text color="white" weight="400" align="left" size="20">
-             {new Date().toISOString()}
+             {localTime}
           </Text>
 
           <Spacer size="14" />
