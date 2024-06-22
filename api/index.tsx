@@ -13,8 +13,8 @@ import {
 
 
 // Uncomment this packages to tested on local server
-import { devtools } from 'frog/dev';
-import { serveStatic } from 'frog/serve-static';
+// import { devtools } from 'frog/dev';
+// import { serveStatic } from 'frog/serve-static';
 
 // Initialize Frog App
 export const app = new Frog({
@@ -74,7 +74,7 @@ app.frame('/farther-tips-action/:fid', async (c) => {
     intents: [
       <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
       <Button  action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://farther.social/tips'> ✨ Tip </Button.Link>
+      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>
     ],
   })
 })
@@ -88,7 +88,7 @@ app.frame('/check-by-me/', async (c) => {
     intents: [
       <Button action='/check-by-me'> Refresh </Button>,
       <Button action='/check-by-me'> Check mine </Button>,
-      <Button.Link href='https://farther.social/tips'> ✨ Tip </Button.Link>
+      <Button.Link href='https://warpcast.com/0x94t3z.eth/0x89b3f1cc'> ✨ Tip </Button.Link>
     ],
   })
 })
@@ -808,7 +808,7 @@ app.image('/check/:fid', async (c) => {
 
 
 // Uncomment for local server testing
-devtools(app, { serveStatic });
+// devtools(app, { serveStatic });
 
 export const GET = handle(app)
 export const POST = handle(app)
