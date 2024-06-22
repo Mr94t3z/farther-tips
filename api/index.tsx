@@ -554,7 +554,7 @@ app.image('/check/:fid', async (c) => {
                 Farther Tips
               </Text>
             </Column>
-            {/* <Column 
+            <Column 
               width="2/4" 
               padding="8" 
               paddingLeft="0" 
@@ -588,7 +588,7 @@ app.image('/check/:fid', async (c) => {
                   {truncatedDisplayName}
                 </Text>
               </Box>
-            </Column> */}
+            </Column>
           </Box>
         </Box>
 
