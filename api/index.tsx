@@ -353,10 +353,10 @@ app.image('/tips', async (c) => {
               </Box>
             </Box>
 
-            <Box flex="1">
+            <Box flex="2">
               <Box 
                 flexDirection="column" 
-                alignHorizontal="right" 
+                alignHorizontal="left" 
                 alignVertical="center"
               >
                 <Box 
@@ -374,6 +374,20 @@ app.image('/tips', async (c) => {
                   <Spacer size="6" />
                   <Text color="lightGrey" weight="400" align="right" size="16">
                     (1 tips)
+                  </Text>
+                </Box>
+
+                <Box 
+                  flexDirection="row" 
+                  alignHorizontal="right" 
+                  alignVertical="center"
+                >
+                  <Text color="grey" weight="400" align="right" size="16">
+                    Rank
+                  </Text>
+                  <Spacer size="44" />
+                  <Text color="white" align="right" size="16">
+                    77 🏁
                   </Text>
                 </Box>
               </Box>
@@ -402,7 +416,7 @@ app.image('/tips', async (c) => {
           padding="18"
           paddingLeft="24"
           borderColor="lightGrey"
-          height="60"
+          height="96"
           width="100%"
         >
           <Box grow flexDirection="row" gap="2">
@@ -412,43 +426,43 @@ app.image('/tips', async (c) => {
                 alignHorizontal="left" 
                 alignVertical="center"
               >
+                <Text color="grey" weight="600" align="left" size="16">
+                  Given
+                </Text>
+                <Spacer size="10" />
                 <Box 
                   flexDirection="row" 
                   alignHorizontal="left" 
                   alignVertical="center"
                 >
-                  <Text color="grey" weight="600" align="left" size="16">
-                    Given
-                  </Text>
-                  <Spacer size="10" />
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" align="left" size="16">
                     9,600 ✨
                   </Text>
                   <Spacer size="6" />
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="400" align="left" size="16">
                     (11 tips)
                   </Text>
                 </Box>
               </Box>
             </Box>
 
-            <Box flex="1">
+            <Box flex="2">
               <Box 
                 flexDirection="column" 
-                alignHorizontal="right" 
+                alignHorizontal="left" 
                 alignVertical="center"
               >
+                <Text color="grey" weight="600" align="left" size="16">
+                  Received
+                </Text>
+                <Spacer size="10" />
                 <Box 
                   flexDirection="row" 
                   alignHorizontal="right" 
                   alignVertical="center"
                 >
-                  <Text color="grey" weight="600" align="right" size="16">
-                    Received
-                  </Text>
-                  <Spacer size="10" />
                   <Text color="white" align="right" size="16">
-                    14,762.08 ✨
+                    14,7628.08 ✨
                   </Text>
                   <Spacer size="6" />
                   <Text color="lightGrey" weight="400" align="right" size="16">
@@ -513,12 +527,14 @@ app.image('/check/:fid', async (c) => {
   // Determine the image URL to use
   const imageUrl = isUnsupportedImage ? fallbackImageUrl : pfpUrl;
 
-  const { totals, currentCycle } = tips;
+  const { rank, totals, currentCycle } = tips;
 
   const startTime = new Date();
   const month = startTime.toLocaleString('en-US', { month: 'short' }).toUpperCase();
   const day = startTime.getDate();
   const currentCycleDate = `${month} ${day}`;
+
+  const user_rank = rank || 0;
   
   const total_given = totals.givenCount || 0;
   const amount_given = totals.givenAmount || 0;
@@ -761,10 +777,10 @@ app.image('/check/:fid', async (c) => {
               </Box>
             </Box>
 
-            <Box flex="1">
+            <Box flex="2">
               <Box 
                 flexDirection="column" 
-                alignHorizontal="right" 
+                alignHorizontal="left" 
                 alignVertical="center"
               >
                 <Box 
@@ -796,6 +812,26 @@ app.image('/check/:fid', async (c) => {
                   </Text>
                   )}
                 </Box>
+
+                <Box 
+                  flexDirection="row" 
+                  alignHorizontal="right" 
+                  alignVertical="center"
+                >
+                  <Text color="grey" weight="400" align="right" size="16">
+                    Rank
+                  </Text>
+                  <Spacer size="44" />
+                  {user_rank <= 0 ? (
+                  <Text color="white" align="right" size="16">
+                    0 🏁
+                  </Text>
+                  ) : (
+                  <Text color="white" align="right" size="16">
+                    {user_rank} 🏁
+                  </Text>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -819,10 +855,10 @@ app.image('/check/:fid', async (c) => {
           borderStyle="solid"
           borderWidth="1"
           borderRadius="8"
-          padding="20"
+          padding="18"
           paddingLeft="24"
           borderColor="lightGrey"
-          height="60"
+          height="96"
           width="100%"
         >
           <Box grow flexDirection="row" gap="2">
@@ -832,15 +868,15 @@ app.image('/check/:fid', async (c) => {
                 alignHorizontal="left" 
                 alignVertical="center"
               >
+                <Text color="grey" weight="600" align="left" size="16">
+                  Given
+                </Text>
+                <Spacer size="10" />
                 <Box 
                   flexDirection="row" 
                   alignHorizontal="left" 
                   alignVertical="center"
                 >
-                  <Text color="grey" weight="600" align="left" size="16">
-                    Given
-                  </Text>
-                  <Spacer size="10" />
                   {amount_given <= 0 ? (
                   <Text color="white" align="right" size="16">
                     0 ✨
@@ -864,21 +900,21 @@ app.image('/check/:fid', async (c) => {
               </Box>
             </Box>
 
-            <Box flex="1">
+            <Box flex="2">
               <Box 
                 flexDirection="column" 
-                alignHorizontal="right" 
+                alignHorizontal="left" 
                 alignVertical="center"
               >
+                <Text color="grey" weight="600" align="left" size="16">
+                  Received
+                </Text>
+                <Spacer size="10" />
                 <Box 
                   flexDirection="row" 
                   alignHorizontal="right" 
                   alignVertical="center"
                 >
-                  <Text color="grey" weight="600" align="right" size="16">
-                    Received
-                  </Text>
-                  <Spacer size="10" />
                   {amount_received <= 0 ? (
                   <Text color="white" align="right" size="16">
                     0 ✨
