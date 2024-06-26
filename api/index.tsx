@@ -95,7 +95,7 @@ app.frame('/farther-tips-action/:fid', async (c) => {
       image: `/check/${fid}`,
       intents: [
         <Button action={`/farther-tips-action/${fid}`}> Refresh </Button>,
-        <Button action='/check-mine'> Check mine </Button>,
+        <Button action='/check-mine'> My Stats </Button>,
         <Button.Link href='https://warpcast.com/0x94t3z.eth/0x80c10619'> ✨ Tip </Button.Link>,
       ],
     });
@@ -135,7 +135,7 @@ app.frame('/check-mine', async (c) => {
       image: `/check/${fid}`,
       intents: [
         <Button action='/check-mine'> Refresh </Button>,
-        <Button action='/check-mine'> Check mine </Button>,
+        <Button action='/check-mine'> My Stats </Button>,
         <Button.Link href='https://warpcast.com/0x94t3z.eth/0x80c10619'> ✨ Tip </Button.Link>,
       ],
     });
