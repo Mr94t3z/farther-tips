@@ -314,7 +314,7 @@ app.image('/tips', async (c) => {
                     Allowance
                   </Text>
                   <Spacer size="10" />
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     3,594 ✨
                   </Text>
                 </Box>
@@ -368,11 +368,11 @@ app.image('/tips', async (c) => {
                     Received
                   </Text>
                   <Spacer size="10" />
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     150 ✨
                   </Text>
                   <Spacer size="6" />
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     (1 tips)
                   </Text>
                 </Box>
@@ -435,11 +435,11 @@ app.image('/tips', async (c) => {
                   alignHorizontal="left" 
                   alignVertical="center"
                 >
-                  <Text color="white" align="left" size="16">
+                  <Text color="white" weight="600" align="left" size="16">
                     9,600 ✨
                   </Text>
                   <Spacer size="6" />
-                  <Text color="lightGrey" weight="400" align="left" size="16">
+                  <Text color="lightGrey" weight="600" align="left" size="16">
                     (11 tips)
                   </Text>
                 </Box>
@@ -461,11 +461,11 @@ app.image('/tips', async (c) => {
                   alignHorizontal="right" 
                   alignVertical="center"
                 >
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     14,7628.08 ✨
                   </Text>
                   <Spacer size="6" />
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     (63 tips)
                   </Text>
                 </Box>
@@ -715,11 +715,11 @@ app.image('/check/:fid', async (c) => {
                   </Text>
                   <Spacer size="10" />
                   {allowance <= 0 ? (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     0 ✨
                   </Text>
                   ) : (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     {allowance.toLocaleString()} ✨
                   </Text>
                   )}
@@ -793,21 +793,21 @@ app.image('/check/:fid', async (c) => {
                   </Text>
                   <Spacer size="10" />
                   {currect_amount_received <= 0 ? (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     0 ✨
                   </Text>
                   ) : (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     {currect_amount_received.toLocaleString()} ✨
                   </Text>
                   )}
                   <Spacer size="6" />
                   {currect_total_received <= 0 ? (
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     (0 tips)
                   </Text>
                   ) : (
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     ({currect_total_received} tips)
                   </Text>
                   )}
@@ -878,21 +878,21 @@ app.image('/check/:fid', async (c) => {
                   alignVertical="center"
                 >
                   {amount_given <= 0 ? (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     0 ✨
                   </Text>
                   ) : (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     {amount_given.toLocaleString()} ✨
                   </Text>
                   )}
                   <Spacer size="6" />
                   {total_given <= 0 ? (
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     (0 tips)
                   </Text>
                   ) : (
-                    <Text color="lightGrey" weight="400" align="right" size="16">
+                    <Text color="lightGrey" weight="600" align="right" size="16">
                     ({total_given.toLocaleString()} tips)
                   </Text>
                   )}
@@ -916,21 +916,21 @@ app.image('/check/:fid', async (c) => {
                   alignVertical="center"
                 >
                   {amount_received <= 0 ? (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     0 ✨
                   </Text>
                   ) : (
-                  <Text color="white" align="right" size="16">
+                  <Text color="white" weight="600" align="right" size="16">
                     {amount_received.toLocaleString()} ✨
                   </Text>
                   )}
                   <Spacer size="6" />
                   {total_received <= 0 ? (
-                  <Text color="lightGrey" weight="400" align="right" size="16">
+                  <Text color="lightGrey" weight="600" align="right" size="16">
                     (0 tips)
                   </Text>
                   ) : (
-                    <Text color="lightGrey" weight="400" align="right" size="16">
+                    <Text color="lightGrey" weight="600" align="right" size="16">
                     ({total_received.toLocaleString()} tips)
                   </Text>
                   )}
